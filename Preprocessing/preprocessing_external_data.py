@@ -1,8 +1,19 @@
-# -*- coding: utf-8 -*- #
+#!/usr/bin/env python3
 
 import json
 import pandas as pd
 import os
+
+MESES = {'enero': '01', 'febrero': '02', 'marzo':'03',
+        'abril': '04', 'mayo': '05', 'junio': '06',
+        'julio': '07', 'agosto':'08', 'septiembre': '09',
+        'octubre': '10', 'noviembre': '11', 'diciembre':'12'
+        }
+
+def write_to_csv(dataframe, nombre):
+    #dataframe = dataframe.drop(dataframe.columns[[0]], axis='columns')
+    dataframe.to_csv(f'{os.path.abspath("..")}/ProcessedData/{nombre}.csv')
+
 
 def read_preprocessing_trains():
     ''' Extraemos los años diferentes a 2017, 2018 y 2019
@@ -11,7 +22,7 @@ def read_preprocessing_trains():
     total_rows = []
     new_dataframe = pd.DataFrame()
 
-    dataframe = pd.read_excel(f'{os.path.abspath("..")}\\RawData\\viajes.xlsx', sheet_name='ViajerosTransportados')
+    dataframe = pd.read_excel(f'{os.path.abspath("..")}/RawData/viajes.xlsx', sheet_name='ViajerosTransportados')
     #print(dataframe)
     total_rows = dataframe.index.values
 
@@ -42,48 +53,69 @@ def read_preprocessing_trains():
     new_dataframe = new_dataframe.drop(new_dataframe.index[[0]])
     
     write_to_csv(new_dataframe, 'trenes')
-    return new_dataframe
+
+def get_date(date, anio):
+    date = date.split()
+    final_date = ''
+    if len(date[0]) == 1:
+        final_date += f'0{date[0]}/'
+    else: 
+        final_date += f'{date[0]}/'
+
+    final_date += f'{MESES.get(date[2])}/{anio}'
+
+    return final_date
+
+def create_calendar_dataframe(json_file, anio):
+    df = pd.DataFrame()
+    for key, value in json_file.items():
+        fecha = []
+        for i in value:
+            if i != 0:
+                fecha.append(get_date(i, anio))
+            else: 
+                fecha.append('Laborable')
+        df[f'{key}'] = fecha
+    return df
 
 def read_unify_calendar():
     ''' Creamos los calendarios y los unificamos, tambien les añadimos la columna de año'''
-    calendar_17 = pd.read_json(f'{os.path.abspath("..")}\\RawData\\calendario2017.json')
-    calendar_18 = pd.read_json(f'{os.path.abspath("..")}\\RawData\\calendario2018.json')
-    calendar_19 = pd.read_json(f'{os.path.abspath("..")}\\RawData\\calendario2019.json')
-    
-    # Para cada calendario añadimos la columna anio (año)
-    t17 = []
-    for i in range(0, len(calendar_17.index)):
-        t17.append(2017)
-    calendar_17['Anio'] = t17
 
-    t18 = []
-    for i in range(0, len(calendar_18.index)):
-        t18.append(2018)
-    calendar_18['Anio'] = t18
+    calendar17 = open(f'{os.path.abspath("..")}/RawData/Calendario2017.json')
+    calendar17 = json.load(calendar17)
+    calendar17 = create_calendar_dataframe(calendar17, '2017')
 
-    t19 = []
-    for i in range(0, len(calendar_19.index)):
-        t19.append(2019)
-    calendar_19['Anio'] = t19
-    
-    # Unificamos los 3 dataframes de calendario para formar un unico calendario
-    full_calendar = pd.concat([calendar_17, calendar_18, calendar_19])
-   
+    calendar18 = open(f'{os.path.abspath("..")}/RawData/Calendario2018.json')
+    calendar18 = json.load(calendar18)
+    calendar18 = create_calendar_dataframe(calendar18, '2018')
+
+    calendar19 = open(f'{os.path.abspath("..")}/RawData/Calendario2019.json')
+    calendar19 = json.load(calendar19)
+    calendar19 = create_calendar_dataframe(calendar19, '2019')
+        
+    full_calendar = pd.concat([calendar17, calendar18, calendar19])
+
     # Escribimos este calendario en un csv para solamente tener que leerlo a modo de dataframe con pad
     write_to_csv(full_calendar, 'calendario')
-    return full_calendar
 
-def write_to_csv(dataframe, nombre):
-    dataframe.to_csv(f'{os.path.abspath("..")}\\ProcessedData\\{nombre}.csv')
+def preprocessing_village():
+
+    xls = pd.ExcelFile(f'{os.path.abspath("..")}/RawData/municipios-provincia.xls') #use r before absolute file path 
+
+    sheetX = xls.parse(0)
+    sheetX = sheetX.iloc[:,[1,6]]
+
+    js = sheetX.to_json()
+    with open((f'{os.path.abspath("..")}/ProcessedData/municipio-ca.json'), 'w') as f:
+        json.dump(js, f) 
 
 def main():
-    train = read_preprocessing_trains()
-    calendar = read_unify_calendar()
+    read_preprocessing_trains()
+    read_unify_calendar()
+    preprocessing_village()
     #print(calendario)
     #print(trenes)
-    # Como se crea una tarjeta de datos??
-    # print(pd.concat([trenes,calendario]))
+    #print(pd.concat([trenes,calendario]))
 
 if __name__=='__main__':
     main()
-   
