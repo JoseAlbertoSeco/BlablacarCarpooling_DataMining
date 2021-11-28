@@ -1,35 +1,38 @@
-# -*- coding: utf-8 -*- #
+#!/usr/bin/env python3
 
 import pandas as pd
 import os
+import json
 
-''' Basic preprocessing of the dataframe: DATOS_BLABLACAR.txt 
+''' Preprocesamiento básico de datos: DATOS_BLABLACAR.txt 
 
-    We only take travel who has more than 0 confirmed seats, and 
-    one than 0 offered seats.
+    Sólo tomamos los viajes que tienen más de 0 plazas confirmadas, y mas de 0 ofertadas.
 
-    We also get only the travels realized in Spain territory
+    También obtenemos sólo los viajes realizados en territorio español
 
-    The final dataframe can be found in the folder 'ProcessedData'
-
+    El dataframe final se encuentra en la carpeta 'ProcessedData' con el nombre de 'blablacar'
 '''
 
 def preprocesing():
-    blabla_data = pd.read_csv(f'{os.path.abspath("..")}\\RawData\\DATOS_BLABLACAR.txt', sep = "|")
+    blabla_data = pd.read_csv(f'{os.path.abspath("..")}/RawData/DATOS_BLABLACAR.txt', sep = "|")
 
     new_blabla = blabla_data[blabla_data['PAIS'] == 'es']
 
     new_blabla = new_blabla[new_blabla['ASIENTOS_OFERTADOS'] != 0]
     new_blabla =  new_blabla[new_blabla['ASIENTOS_CONFIRMADOS'] != 0]
+    new_blabla = new_blabla.drop(['IMP_KM'], axis=1)
 
-    portugal_cities = pd.read_excel(f'{os.path.abspath("..")}\\RawData\\portugal.xlsx')
+    portugal_cities = pd.read_excel(f'{os.path.abspath("..")}/RawData/portugal.xlsx')
 
+    # Quitar nulos
     portugal_cities.dropna(axis=0, how='any', thresh=None, subset=None, inplace=True)
 
     cities =  portugal_cities[['Municipios (concelhos)']]
     capitals = portugal_cities[['Ciudad']]
     cities = cities.to_numpy().tolist()
     capitals = capitals.to_numpy().tolist()
+    lista = []
+
     lista = []
     for i in cities:
         lista.append(i[0])
@@ -44,7 +47,13 @@ def preprocesing():
     for i in lista:
         new_blabla.drop(new_blabla.loc[new_blabla['ORIGEN'] == i].index, inplace=True)
 
-    new_blabla.to_csv(f'{os.path.abspath("..")}\\ProcessedData\\blablacar.csv')
+    #new_blabla.to_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar.csv')
+    js = new_blabla.to_json()
+    with open((f'{os.path.abspath("..")}/ProcessedData/blablacar.json'), 'w') as f:
+        json.dump(js, f)
+
+    df = pd.read_json(js)
+    print(df)
 
 def main():
     preprocesing()
