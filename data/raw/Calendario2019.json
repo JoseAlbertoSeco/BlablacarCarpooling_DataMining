@@ -1,0 +1,202 @@
+{
+    "Fiestas nacionales": [
+        "1 de enero",
+        "19 de abril",
+        "1 de mayo",
+        "15 de agosto",
+        "12 de octubre",
+        "1 de noviembre",
+        "6 de diciembre",
+        "25 de diciembre"
+    ],
+    "Andalucia": [
+        "7 de enero",
+        "28 de febrero",
+        "18 de abril",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Aragon": [
+        "7 de enero",
+        "18 de abril",
+        "23 de abril",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Principado de Asturias": [
+        "7 de enero",
+        "18 de abril",
+        "9 de septiembre",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Illes Balears": [
+        "1 de marzo",
+        "18 de abril",
+        "22 de abril",
+        "26 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Canarias": [
+        "7 de enero",
+        "18 de abril",
+        "30 de mayo",
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "Cantabria": [
+        "18 de abril",
+        "22 de abril",
+        "25 de julio",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Castilla y Leon": [
+        "7 de enero",
+        "18 de abril",
+        "23 de abril",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Castilla-La Mancha": [
+        "18 de abril",
+        "22 de abril",
+        "31 de mayo",
+        "20 de junio",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Catalunia": [
+        "22 de abril",
+        "24 de junio",
+        "11 de septiembre",
+        "26 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Comunitat Valenciana": [
+        "19 de marzo",
+        "22 de abril",
+        "24 de junio",
+        "9 de octubre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Extremadura": [
+        "7 de enero",
+        "18 de abril",
+        "9 de septiembre",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Galicia": [
+        "19 de marzo",
+        "18 de abril",
+        "17 de mayo",
+        "25 de julio",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Comunidad de Madrid": [
+        "7 de enero",
+        "18 de abril",
+        "2 de mayo",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Region de Murcia": [
+        "7 de enero",
+        "19 de marzo",
+        "18 de abril",
+        "10 de junio",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Comunidad Foral de Navarra": [
+        "7 de enero",
+        "19 de marzo",
+        "18 de abril",
+        "22 de abril",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Pais Vasco": [
+        "19 de marzo",
+        "18 de abril",
+        "22 de abril",
+        "25 de julio",
+        0,
+        0,
+        0,
+        0
+    ],
+    "La Rioja": [
+        "18 de abril",
+        "22 de abril",
+        "10 de junio",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Ciudad Autonoma de Ceuta": [
+        "7 de enero",
+        "18 de abril",
+        "12 de agosto",
+        "2 de septiembre",
+        0,
+        0,
+        0,
+        0
+    ],
+    "Ciudad Autonoma de Melilla": [
+        "7 de enero",
+        "18 de abril",
+        "12 de agosto",
+        "9 de diciembre",
+        0,
+        0,
+        0,
+        0
+    ]
+}
