@@ -180,9 +180,10 @@ def preprocessing_village():
                 # Creamos una fila que metemos en el nuevo diccionario
                 fila = sheetX[sheetX['Municipio'] == i] # Fila
                 autonomia = fila['Autonomía'].to_numpy().tolist()[0] # Valor
+                provincia = fila['Provincia'].to_numpy().tolist()[0] # Valor
 
                 # Introducir valores ene l nuevo diccionario
-                nueva_fila = { 'Municipio': cadena_final, 'Autonomía': autonomia} # creamos un diccionario
+                nueva_fila = { 'Municipio': cadena_final, 'Autonomía': autonomia, 'Provincia':provincia} # creamos un diccionario
                 new_df = new_df.append(nueva_fila, ignore_index=True) # Introduciendo disccionario en el nuevo dataframe
 
                 siguiente = False
