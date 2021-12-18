@@ -2,7 +2,6 @@
 
 import pandas as pd
 import os
-import json
 
 def introducir_ccaa(df, municipios, ccaa, nombre_columna, type):
     ca_introducir = ['NaN' for i in range(len(municipios))]
@@ -15,16 +14,14 @@ def introducir_ccaa(df, municipios, ccaa, nombre_columna, type):
 
     ya_encontrados = []
     for municipio in municipios:
-        #print('entra')
-        if municipio[0] not in ya_encontrados:
-            ya_encontrados.append(municipio[0])
-            if str(municipio[0]) in ccaa.Municipio.values:
+        if municipio not in ya_encontrados:
+            ya_encontrados.append(municipio)
+            if str(municipio) in ccaa.Municipio.values:
                 # Añadir la comunidad autonoma de ese municipio
-                m = ccaa[ccaa['Municipio'] == municipio[0]] # Fila
+                m = ccaa[ccaa['Municipio'] == municipio] # Fila
                 ca = m['Autonomía'].to_numpy().tolist()[0] # Valor
-                #mini_df = df[df['ORIGEN'] == municipio[0]]
                 # Cambio
-                new_df = df[df['ORIGEN'] == municipio[0]]
+                new_df = df[df[type] == municipio]
                 #print(new_df)
                 new_df = new_df.replace(to_replace ="NaN", value =ca)
                 #print(new_df)
@@ -35,18 +32,19 @@ def introducir_ccaa(df, municipios, ccaa, nombre_columna, type):
 
 def find_holiday(df, ccaa):
     # Ciudades de origen y destino de los viajes
-    origen = df[['ORIGEN']].to_numpy().tolist()
-    destino = df[['DESTINO']]
-
+    origen = df['ORIGEN'].tolist()
     df = introducir_ccaa(df, origen, ccaa, 'CA_ORIGEN', 'ORIGEN')
+
+    destino = df['DESTINO'].tolist()
     df = introducir_ccaa(df, destino, ccaa, 'CA_DESTINO', 'DESTINO')
 
+    #print(df)
+    df.to_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv', index = False)
+
+
 def main():
-    df = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar.csv')
-    holidays = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/calendario.csv')
+    df = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv')
     ccaa = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/ccaa.csv')
-    ccaa = ccaa.drop(['Unnamed: 0'], axis =1)
-    df = df.drop(['Unnamed: 0'], axis =1)
     find_holiday(df, ccaa)
 
 if __name__=='__main__':

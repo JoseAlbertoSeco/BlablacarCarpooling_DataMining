@@ -47,16 +47,12 @@ def preprocesing():
     for i in lista:
         new_blabla.drop(new_blabla.loc[new_blabla['ORIGEN'] == i].index, inplace=True)
 
-    #new_blabla.to_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar.csv')
-    js = new_blabla.to_json()
-    with open((f'{os.path.abspath("..")}/ProcessedData/blablacar.json'), 'w') as f:
-        json.dump(js, f)
 
-    df = pd.read_json(js)
-    print(df)
+    new_blabla.to_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv', index = False)
+
 
 def main():
-    preprocesing()
+   preprocesing()
 
 if __name__=='__main__':
     main()

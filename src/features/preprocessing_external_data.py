@@ -12,7 +12,7 @@ MESES = {'enero': '01', 'febrero': '02', 'marzo':'03',
 
 def write_to_csv(dataframe, nombre):
     #dataframe = dataframe.drop(dataframe.columns[[0]], axis='columns')
-    dataframe.to_csv(f'{os.path.abspath("..")}/ProcessedData/{nombre}.csv')
+    dataframe.to_csv(f'{os.path.abspath("..")}/ProcessedData/{nombre}.csv', index = False)
 
 
 def read_preprocessing_trains():
@@ -33,7 +33,7 @@ def read_preprocessing_trains():
     # Sacamos la fila de las fechas y la convertimos a lista
     date = dataframe.iloc[0, :]
     date.to_numpy().tolist().pop(0)
-    
+
     # Creamos un nuevo dataframe en el que se cojen solo las columnas q queremos y las comparamos para ver q es
     # la correcta, si tenemos esa columna la metemos en el nuevo dataframe, una vez tenemos todas solo introducimos
     # la fecha de cada uno de los viajes por meses
@@ -41,6 +41,7 @@ def read_preprocessing_trains():
         for j in total_rows:            
             if i in dataframe.iloc[j, 0:].values:
                 new_dataframe[i] = dataframe.iloc[j, 0:]
+                #print(dataframe.iloc[j, 0:])
     new_dataframe['Fecha'] = date
     
     # Quitar el nombre 'Unnamed' a las filas y lo sustituimos por un id incremental desde 0
@@ -51,7 +52,7 @@ def read_preprocessing_trains():
     new_dataframe.index = nombrar_filas
 
     new_dataframe = new_dataframe.drop(new_dataframe.index[[0]])
-    
+
     write_to_csv(new_dataframe, 'trenes')
 
 def get_date(date, anio):
@@ -96,26 +97,111 @@ def read_unify_calendar():
     full_calendar = pd.concat([calendar17, calendar18, calendar19])
 
     # Escribimos este calendario en un csv para solamente tener que leerlo a modo de dataframe con pad
+    #print(full_calendar)
     write_to_csv(full_calendar, 'calendario')
+
+
+def comprobacion(df):
+    # Ver que nombres no se encuentran en los dos dataframes
+    bla = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv')
+
+    origen = bla['ORIGEN'].tolist()
+    destino = bla['DESTINO'].tolist()
+    blabla_total = origen + destino
+    blabla_total = list(set(blabla_total))
+
+    total_municipios = df['Municipio'].tolist()
+    total_municipios = list(set(total_municipios))
+
+    diccionario = {item: True if item in total_municipios else False for item in blabla_total}
+    #print(diccionario)
+    municipios = []
+    mano = 0
+    repes = []
+    for clave, valor in diccionario.items():
+        if valor == False:
+            for i in total_municipios:
+                if clave in i and clave not in repes:
+                    repes.append(clave)
+                    mano += 1
+                    municipios.append(clave)
+
+    f = open (f'{os.path.abspath("..")}/ProcessedData/ciudades_no_españolas_extraidas.txt', "a")
+    for i in municipios:
+        f.write(i + '\n')
+    f.close()
 
 def preprocessing_village():
 
     xls = pd.ExcelFile(f'{os.path.abspath("..")}/RawData/municipios-provincia.xls') #use r before absolute file path 
 
-    sheetX = xls.parse(0)
-    sheetX = sheetX.iloc[:,[1,6]]
+    sheetX = xls.parse(0) #sheet
+    sheetX = sheetX.iloc[:,[1,6,8]]
 
-    js = sheetX.to_json()
-    with open((f'{os.path.abspath("..")}/ProcessedData/municipio-ca.json'), 'w') as f:
-        json.dump(js, f) 
+    # Nombre que empiezan por " (comilla dobles), los cuales se llaman diferente
+    # Se guardan en un txt para tenerlo almacenado
+
+    x = sheetX[sheetX['Municipio'].str.contains(",", case=False)]
+    print("X " ,x)
+    nombres = x.index.tolist()
+
+    # Creación del dataframe que vamos a concatenar despues.
+    # Es el df con los nombres bien puestos
+    new_df = pd.DataFrame()
+    new_df['Municipio'] = None
+    new_df['Autonomía'] = None
+    new_df['Provincia'] = None
+    
+    siguiente = False
+    for i in x.Municipio.values:
+        # Puntero a la lista del tipo: [Granja, La]
+        pointer = 0
+
+        for x in i.split():
+            if x[-1] == ',':
+                # Flag 
+                siguiente = True
+
+            if siguiente:                
+                cadena_final = ''
+
+                # Cadena entera sin la coma
+                withoutcoma = i.replace(',', "")
+                splitted = withoutcoma.split()
+
+                # Despues de la coma
+                cadena = splitted[pointer+1:len(splitted)]
+
+                # Pasar de list a cadena lo que queremos concatenar
+                cadena_final = " ".join(map(str, cadena)) 
+                to_concat = " ".join(map(str, splitted[0:pointer+1]))
+                cadena_final = cadena_final + " "+to_concat
+
+                # Creamos una fila que metemos en el nuevo diccionario
+                fila = sheetX[sheetX['Municipio'] == i] # Fila
+                autonomia = fila['Autonomía'].to_numpy().tolist()[0] # Valor
+
+                # Introducir valores ene l nuevo diccionario
+                nueva_fila = { 'Municipio': cadena_final, 'Autonomía': autonomia} # creamos un diccionario
+                new_df = new_df.append(nueva_fila, ignore_index=True) # Introduciendo disccionario en el nuevo dataframe
+
+                siguiente = False
+                continue
+            pointer += 1
+
+    # Extraigo las filas que son del tipo "Granja, La"
+    sheetX = sheetX.drop(nombres, axis=0)
+    # Meto esas filas bien puestas
+    sheetX = pd.concat([sheetX, new_df])
+
+    comprobacion(sheetX)
+
+    write_to_csv(sheetX, 'ccaa')
 
 def main():
     read_preprocessing_trains()
     read_unify_calendar()
     preprocessing_village()
-    #print(calendario)
-    #print(trenes)
-    #print(pd.concat([trenes,calendario]))
 
 if __name__=='__main__':
     main()
