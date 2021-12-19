@@ -61,6 +61,8 @@ y [df_CLMLocalizado](https://github.com/JoseAlbertoSeco/MineriaDatos/blob/main/d
 
 - En el archivo *GráficasTrasPreprocesado* que encontramos en la carpeta *notebooks* podemos encontrarnos dos gráficas con el total de viajes interprovinciales de _Castilla-La Mancha_ y _Andalucía_
 
+El archivo *colab* [TrenesPreprocesado](https://github.com/JoseAlbertoSeco/BlablacarCarpooling_DataMining/blob/main/notebooks/TrenesPreprocesado.ipynb)se encuentra la obtención de la tarjeta de datos de los trenes, el archivo generado no se ha podido almacenar en GitHub debido a que pesa más de 25MB.
+
 ## Construido con :keyboard:
 
 * Python3: para preprocesado de datos demasiado pesados
