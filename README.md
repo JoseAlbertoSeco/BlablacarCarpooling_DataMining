@@ -1,5 +1,5 @@
 # Blablacar Carpooling
-El retoCajamar Carpoolingnos presenta los datos obtenidos de la aplicaciónnBlablacar,app ,utilizada por los usuarios para realizar viajes a bajo coste en vehículos de particulares.
+El reto Cajamar Carpoolingnos presenta los datos obtenidos de la aplicación Blablacar, app utilizada por los usuarios para realizar viajes a bajo coste en vehículos de particulares.
 En este proyecto se sigue el proceso KDD para extraer información de grandes volumenes de datos.
 
 # Objetivos
