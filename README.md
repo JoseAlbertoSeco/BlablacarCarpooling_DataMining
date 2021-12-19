@@ -10,7 +10,7 @@ Estas instrucciones te permitirán obtener una copia del proyecto en funcionamie
 
 En la rama **main** nos podemos encontrar todos los archivos pertenecientes a este proyecto con la siguiente estructura:
 
-** Poner foto cuando ya este todo **
+![image](https://drive.google.com/uc?export=view&id=1OimkLg-MkeWAiadDYty1-iYAAgEW9Cy7)
 
 * Como se puede observar se ha seguido la estructura de proyecto [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/)
 
