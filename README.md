@@ -2,6 +2,15 @@
 El retoCajamar Carpoolingnos presenta los datos obtenidos de la aplicaciónnBlablacar,app ,utilizada por los usuarios para realizar viajes a bajo coste en vehículos de particulares.
 En este proyecto se sigue el proceso KDD para extraer información de grandes volumenes de datos.
 
+# Objetivos
+**Objetivo principal**:
+
+Como principal objetivo vamos a extraer los  viajes realizados en la población Española, estos viajes junto con los días festivos a nivel nacional y de autonomía nos servirán para extraer conclusiones sobre los desplazamientos realizados en vacaciones y poder inferir sobre comportamientos sociales futuros, como poder ofertar más viajes a una determinada ciudad en una festividad.  Primero realizaremos la estimación por las provincias de Castilla-La Mancha y Andalucía.
+
+**Objetivo secundario**:
+
+Realizar la comparativa viajeros trenes/blablacar, usando distintitos medios de transporte, por lo tanto, podríamos discutir si se estan ofertando unos recursos no utilizados. Para este objetivo parcial necesitaremos los trenes y demás medios ofertados junto con los viajes blablacar.
+
 # Empecemos :rocket:
 
 Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo.
