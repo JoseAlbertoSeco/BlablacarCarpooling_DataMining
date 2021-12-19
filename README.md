@@ -29,7 +29,7 @@ pip3 install -r requirements.txt
 ```
 
 Una vez instaladas las diferentes librerías se deberán descargar algunos datos que no estan incluidos en este repositorio por contener un tamaño excesivo.
-* [DATOS_BLABLACAR](https://drive.google.com/file/d/1X3OAsvt03Rv9cEcW0KOcrA6ZjwBIV94Q/view?usp=sharing): Rawdata con los datos del blablacar.
+* [DATOS_BLABLACAR](https://drive.google.com/file/d/1X3OAsvt03Rv9cEcW0KOcrA6ZjwBIV94Q/view?usp=sharing): Rawdata con los datos del blablacar, han de ser introducidos en la carpeta *data/raw*
 * [blablacar_basic](https://drive.google.com/file/d/1XYfVdHCcOCy-p40fjcKi0b6N6x6z7awh/view?usp=sharing): Dataframe de DATOS_BLABLACAR preprocesado.
 
 ## Modo de uso
