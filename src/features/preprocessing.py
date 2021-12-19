@@ -3,11 +3,14 @@
 import pandas as pd
 import os
 
+''' 
+    En este módulo se añaden las columnas CA_DESTINO y CA_ORIGEN por viaje
+'''
+
 def introducir_ccaa(df, municipios, ccaa, nombre_columna, type):
+    ''' Creamos nuevo dataframe con la columna nombre_columna añadida '''
     ca_introducir = ['NaN' for i in range(len(municipios))]
-    #print(ca_introducir)
     df[nombre_columna] = ca_introducir
-    #print(df)
 
     new_df = pd.DataFrame()
     final_df = pd.DataFrame()
@@ -22,15 +25,12 @@ def introducir_ccaa(df, municipios, ccaa, nombre_columna, type):
                 ca = m['Autonomía'].to_numpy().tolist()[0] # Valor
                 # Cambio
                 new_df = df[df[type] == municipio]
-                #print(new_df)
                 new_df = new_df.replace(to_replace ="NaN", value =ca)
-                #print(new_df)
                 final_df = pd.concat([final_df, new_df])
-                
-    #print(final_df)
+
     return final_df
 
-def find_holiday(df, ccaa):
+def find_ccaa(df, ccaa):
     # Ciudades de origen y destino de los viajes
     origen = df['ORIGEN'].tolist()
     df = introducir_ccaa(df, origen, ccaa, 'CA_ORIGEN', 'ORIGEN')
@@ -38,14 +38,15 @@ def find_holiday(df, ccaa):
     destino = df['DESTINO'].tolist()
     df = introducir_ccaa(df, destino, ccaa, 'CA_DESTINO', 'DESTINO')
 
-    #print(df)
-    df.to_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv', index = False)
+    print('Preprocesado y unificacion de municipios y fechas')
+    print(df.head(3))
+    df.to_csv(f'{os.path.abspath("..")}/data/processed/blablacar_basic.csv', index = False)
 
 
 def main():
-    df = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv')
-    ccaa = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/ccaa.csv')
-    find_holiday(df, ccaa)
+    df = pd.read_csv(f'{os.path.abspath("..")}/data/processed/blablacar_basic.csv')
+    ccaa = pd.read_csv(f'{os.path.abspath("..")}/data/processed/ccaa.csv')
+    find_ccaa(df, ccaa)
 
 if __name__=='__main__':
     main()
