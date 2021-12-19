@@ -3,6 +3,8 @@
 import json
 import pandas as pd
 import os
+import geopandas as gpd
+from geojson import dump
 
 MESES = {'enero': '01', 'febrero': '02', 'marzo':'03',
         'abril': '04', 'mayo': '05', 'junio': '06',
@@ -131,6 +133,15 @@ def comprobacion(df):
         f.write(i + '\n')
     f.close()
 
+def preprocessing_coordinates():
+    # Cargar la capa temática
+    natalidad = f'{os.path.abspath("..")}/RawData/natalidad.geojson'
+    localizacion = gpd.read_file(natalidad)
+    localizacion = localizacion.drop(['CC_2', 'NAT2018'], axis=1)
+    with open(f'{os.path.abspath("..")}/ProcessedData/geolocalizaciones.geojson', 'w') as f:
+        dump(localizacion, f)
+
+
 def preprocessing_village():
 
     xls = pd.ExcelFile(f'{os.path.abspath("..")}/RawData/municipios-provincia.xls') #use r before absolute file path 
@@ -203,6 +214,7 @@ def main():
     read_preprocessing_trains()
     read_unify_calendar()
     preprocessing_village()
+    preprocessing_coordinates()
 
 if __name__=='__main__':
     main()
