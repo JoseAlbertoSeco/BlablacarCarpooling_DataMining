@@ -34,21 +34,23 @@ Una vez instaladas las diferentes librerías se deberán descargar algunos datos
 
 ## Modo de uso
 - Primero se realizo un análisis básico de datos para encontrar diferentes problemáticas, se puede encontrar en el archivo *problems_analysis* de la carpeta *notebooks*.
-- Ejecutamos el preprocesado básico de datos, para ello utilizaremos los archivos de la carpeta *src/features* en el siguiente orden:
+- Ejecutamos el preprocesado básico de datos, para ello utilizaremos los archivos de la carpeta *src/* en el siguiente orden:
+
+- Para empezar nos ubicaremos en la carpeta *src*.
 
 Archivo en el que preprocesamos los datos del archivo *DATOS_BLABLACAR.txt*
 ```python
-python3 preprocesing_blablacar.py
+python3 features/preprocesing_blablacar.py
 ```
 
 Archivo en el que preprocesamos los datos que se encuentran en la carpeta *data/raw*.
 ```python
-python3 preprocesing_external_data.py
+python3 features/preprocesing_external_data.py
 ```
 
 Archivo en el que preprocesamos diversos datos de dos dataframes obtenidos tras la ejecución de los archivos anteriores.
 ```python
-python3 preprocesing.py
+python3 features/preprocesing.py
 ```
 
 A continuación unificamos todos estos archivos en el *colab* [GeolocalizacionProvincial](https://github.com/JoseAlbertoSeco/MineriaDatos/blob/main/notebooks/GeolocalizacionProvincial.ipynb) 
