@@ -14,7 +14,7 @@ MESES = {'enero': '01', 'febrero': '02', 'marzo':'03',
 
 def write_to_csv(dataframe, nombre):
     #dataframe = dataframe.drop(dataframe.columns[[0]], axis='columns')
-    dataframe.to_csv(f'{os.path.abspath("..")}/ProcessedData/{nombre}.csv', index = False)
+    dataframe.to_csv(f'{os.path.abspath("..")}/data/processed/{nombre}.csv', index = False)
 
 
 def read_preprocessing_trains():
@@ -24,8 +24,7 @@ def read_preprocessing_trains():
     total_rows = []
     new_dataframe = pd.DataFrame()
 
-    dataframe = pd.read_excel(f'{os.path.abspath("..")}/RawData/viajes.xlsx', sheet_name='ViajerosTransportados')
-    #print(dataframe)
+    dataframe = pd.read_excel(f'{os.path.abspath("..")}/data/raw/viajes.xlsx', sheet_name='ViajerosTransportados')
     total_rows = dataframe.index.values
 
     # Filas con las que nos queremos quedar
@@ -43,7 +42,7 @@ def read_preprocessing_trains():
         for j in total_rows:            
             if i in dataframe.iloc[j, 0:].values:
                 new_dataframe[i] = dataframe.iloc[j, 0:]
-                #print(dataframe.iloc[j, 0:])
+            
     new_dataframe['Fecha'] = date
     
     # Quitar el nombre 'Unnamed' a las filas y lo sustituimos por un id incremental desde 0
@@ -55,6 +54,8 @@ def read_preprocessing_trains():
 
     new_dataframe = new_dataframe.drop(new_dataframe.index[[0]])
 
+    print('\nDataframe sobre trenes generado')
+    print(new_dataframe.head(3))
     write_to_csv(new_dataframe, 'trenes')
 
 def get_date(date, anio):
@@ -84,28 +85,29 @@ def create_calendar_dataframe(json_file, anio):
 def read_unify_calendar():
     ''' Creamos los calendarios y los unificamos, tambien les añadimos la columna de año'''
 
-    calendar17 = open(f'{os.path.abspath("..")}/RawData/Calendario2017.json')
+    calendar17 = open(f'{os.path.abspath("..")}/data/raw/Calendario2017.json')
     calendar17 = json.load(calendar17)
     calendar17 = create_calendar_dataframe(calendar17, '2017')
 
-    calendar18 = open(f'{os.path.abspath("..")}/RawData/Calendario2018.json')
+    calendar18 = open(f'{os.path.abspath("..")}/data/raw/Calendario2018.json')
     calendar18 = json.load(calendar18)
     calendar18 = create_calendar_dataframe(calendar18, '2018')
 
-    calendar19 = open(f'{os.path.abspath("..")}/RawData/Calendario2019.json')
+    calendar19 = open(f'{os.path.abspath("..")}/data/raw/Calendario2019.json')
     calendar19 = json.load(calendar19)
     calendar19 = create_calendar_dataframe(calendar19, '2019')
         
     full_calendar = pd.concat([calendar17, calendar18, calendar19])
 
-    # Escribimos este calendario en un csv para solamente tener que leerlo a modo de dataframe con pad
-    #print(full_calendar)
+    # Escribimos este calendario en un csv para solamente tener que leerlo a modo de dataframe con pandas
+    print('\nDataframe sobre fechas generado')
+    print(full_calendar.head(3))
     write_to_csv(full_calendar, 'calendario')
 
 
 def comprobacion(df):
     # Ver que nombres no se encuentran en los dos dataframes
-    bla = pd.read_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv')
+    bla = pd.read_csv(f'{os.path.abspath("..")}/data/processed/blablacar_basic.csv')
 
     origen = bla['ORIGEN'].tolist()
     destino = bla['DESTINO'].tolist()
@@ -116,7 +118,7 @@ def comprobacion(df):
     total_municipios = list(set(total_municipios))
 
     diccionario = {item: True if item in total_municipios else False for item in blabla_total}
-    #print(diccionario)
+
     municipios = []
     mano = 0
     repes = []
@@ -128,23 +130,25 @@ def comprobacion(df):
                     mano += 1
                     municipios.append(clave)
 
-    f = open (f'{os.path.abspath("..")}/ProcessedData/ciudades_no_españolas_extraidas.txt', "a")
+    f = open (f'{os.path.abspath("..")}/data/interim/ciudades_no_españolas_extraidas.txt', "a")
     for i in municipios:
         f.write(i + '\n')
     f.close()
 
 def preprocessing_coordinates():
     # Cargar la capa temática
-    natalidad = f'{os.path.abspath("..")}/RawData/natalidad.geojson'
+    natalidad = f'{os.path.abspath("..")}/data/raw/natalidad.geojson'
     localizacion = gpd.read_file(natalidad)
     localizacion = localizacion.drop(['CC_2', 'NAT2018'], axis=1)
-    with open(f'{os.path.abspath("..")}/ProcessedData/geolocalizaciones.geojson', 'w') as f:
+    print('\nDataframe sobre coordenadas generado')
+    print(localizacion.head(3))
+    with open(f'{os.path.abspath("..")}/data/processed/geolocalizaciones.geojson', 'w') as f:
         dump(localizacion, f)
 
 
 def preprocessing_village():
 
-    xls = pd.ExcelFile(f'{os.path.abspath("..")}/RawData/municipios-provincia.xls') #use r before absolute file path 
+    xls = pd.ExcelFile(f'{os.path.abspath("..")}/data/raw/municipios-provincia.xls') #use r before absolute file path 
 
     sheetX = xls.parse(0) #sheet
     sheetX = sheetX.iloc[:,[1,6,8]]
@@ -153,7 +157,7 @@ def preprocessing_village():
     # Se guardan en un txt para tenerlo almacenado
 
     x = sheetX[sheetX['Municipio'].str.contains(",", case=False)]
-    print("X " ,x)
+
     nombres = x.index.tolist()
 
     # Creación del dataframe que vamos a concatenar despues.
@@ -207,10 +211,12 @@ def preprocessing_village():
     sheetX = pd.concat([sheetX, new_df])
 
     comprobacion(sheetX)
-
+    print('\nDataframe sobre municipios generado')
+    print(sheetX.head(3))
     write_to_csv(sheetX, 'ccaa')
 
 def main():
+    print('Preprocesando datos externos... \nGenerando dataframes...')
     read_preprocessing_trains()
     read_unify_calendar()
     preprocessing_village()

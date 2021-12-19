@@ -2,7 +2,6 @@
 
 import pandas as pd
 import os
-import json
 
 ''' Preprocesamiento básico de datos: DATOS_BLABLACAR.txt 
 
@@ -14,7 +13,7 @@ import json
 '''
 
 def preprocesing():
-    blabla_data = pd.read_csv(f'{os.path.abspath("..")}/RawData/DATOS_BLABLACAR.txt', sep = "|")
+    blabla_data = pd.read_csv(f'{os.path.abspath("..")}/data/raw/DATOS_BLABLACAR.txt', sep = "|")
 
     new_blabla = blabla_data[blabla_data['PAIS'] == 'es']
 
@@ -22,7 +21,7 @@ def preprocesing():
     new_blabla =  new_blabla[new_blabla['ASIENTOS_CONFIRMADOS'] != 0]
     new_blabla = new_blabla.drop(['IMP_KM'], axis=1)
 
-    portugal_cities = pd.read_excel(f'{os.path.abspath("..")}/RawData/portugal.xlsx')
+    portugal_cities = pd.read_excel(f'{os.path.abspath("..")}/data/raw/portugal.xlsx')
 
     # Quitar nulos
     portugal_cities.dropna(axis=0, how='any', thresh=None, subset=None, inplace=True)
@@ -47,8 +46,10 @@ def preprocesing():
     for i in lista:
         new_blabla.drop(new_blabla.loc[new_blabla['ORIGEN'] == i].index, inplace=True)
 
+    print('Preprocesado datos sobre blablacar.')
+    print(new_blabla.head(3))
 
-    new_blabla.to_csv(f'{os.path.abspath("..")}/ProcessedData/blablacar_basic.csv', index = False)
+    new_blabla.to_csv(f'{os.path.abspath("..")}/data/processed/blablacar_basic.csv', index = False)
 
 
 def main():
