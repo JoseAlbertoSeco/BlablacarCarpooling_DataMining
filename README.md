@@ -31,6 +31,7 @@ pip3 install -r requirements.txt
 Una vez instaladas las diferentes librerías se deberán descargar algunos datos que no estan incluidos en este repositorio por contener un tamaño excesivo.
 * [DATOS_BLABLACAR](https://drive.google.com/file/d/1X3OAsvt03Rv9cEcW0KOcrA6ZjwBIV94Q/view?usp=sharing): Rawdata con los datos del blablacar, han de ser introducidos en la carpeta *data/raw*
 * [blablacar_basic](https://drive.google.com/file/d/1XYfVdHCcOCy-p40fjcKi0b6N6x6z7awh/view?usp=sharing): Dataframe de DATOS_BLABLACAR preprocesado.
+* [df_trenes](https://drive.google.com/file/d/1uOb10sr_1bdtHfCOpHUQQZe6engoqawz/view?usp=sharing): Tarjeta de datos de los trenes, incluir en data/processed.
 
 ## Modo de uso
 - Primero se realizo un análisis básico de datos para encontrar diferentes problemáticas, se puede encontrar en el archivo *problems_analysis* de la carpeta *notebooks*.
