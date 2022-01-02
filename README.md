@@ -80,6 +80,6 @@ El archivo *colab* [TrenesPreprocesado](https://github.com/JoseAlbertoSeco/Blabl
 
 ## Autores :pencil:
 
-* María Blanco González-Mohíno
-* Jose Alberto Seco Sánchez-Camacho
-* Pablo Velasco Crespo
+* [María Blanco Gónzalez-Mohíno](https://github.com/MariaBlancoGonzalez/)
+* [José Alberto Seco Sánchez-Camacho](https://github.com/JoseAlbertoSeco/)
+* [Pablo Velasco Crespo](https://github.com/PabloVelascoCrespo/)
