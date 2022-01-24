@@ -73,6 +73,13 @@ y [df_CLMLocalizado](https://github.com/JoseAlbertoSeco/MineriaDatos/blob/main/d
 
 El archivo *colab* [TrenesPreprocesado](https://github.com/JoseAlbertoSeco/BlablacarCarpooling_DataMining/blob/main/notebooks/TrenesPreprocesado.ipynb) se encuentra la obtención de la tarjeta de datos de los trenes, el archivo generado no se ha podido almacenar en GitHub debido a que pesa más de 25MB.
 
+## Lineas de trabajo.
+Las lineas de trabajo desarrolladas se encuentran en la carpeta *notebooks*. Estos archivos son:
+* Regresion
+* Clasificacion_Binaria
+* Clasificacion_Multiobjetivo
+* ComparacionTransporte
+
 ## Construido con :keyboard:
 
 * Python3: para preprocesado de datos demasiado pesados
