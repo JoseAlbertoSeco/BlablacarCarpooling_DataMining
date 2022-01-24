@@ -5,7 +5,7 @@ En este proyecto se sigue el proceso KDD para extraer información de grandes vo
 # Objetivos
 **Objetivo principal**:
 
-Como principal objetivo vamos a extraer los  viajes realizados en la población Española, estos viajes junto con los días festivos a nivel nacional y de autonomía nos servirán para extraer conclusiones sobre los desplazamientos realizados en vacaciones y poder inferir sobre comportamientos sociales futuros, como poder ofertar más viajes a una determinada ciudad en una festividad.  Primero realizaremos la estimación por las provincias de Castilla-La Mancha y Andalucía.
+Como principal objetivo vamos a extraer los  viajes realizados en la población Española, estos viajes junto con los días festivos a nivel nacional y de autonomía nos servirán para extraer conclusiones sobre los desplazamientos realizados y poder inferir sobre comportamientos sociales futuros, como poder ofertar más viajes a una determinada ciudad en una festividad. Primero realizaremos la estimación por las provincias de Castilla-La Mancha y Andalucía.
 
 **Objetivo secundario**:
 
@@ -17,11 +17,7 @@ Estas instrucciones te permitirán obtener una copia del proyecto en funcionamie
 
 ## Análisis de archivos
 
-En la rama **main** nos podemos encontrar todos los archivos pertenecientes a este proyecto con la siguiente estructura:
-
-![image](https://drive.google.com/uc?export=view&id=1wXv9-gwfLIteeZG-DDGtHnLRQPilMbL4)
-
-* Como se puede observar se ha seguido la estructura de proyecto [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/)
+Se ha seguido la estructura de proyecto [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/)
 
 ## Pre-requisitos
 
@@ -64,14 +60,9 @@ Archivo en el que preprocesamos diversos datos de dos dataframes obtenidos tras 
 python3 features/preprocesing.py
 ```
 
-A continuación unificamos todos estos archivos en el *colab* [GeolocalizacionProvincial](https://github.com/JoseAlbertoSeco/MineriaDatos/blob/main/notebooks/GeolocalizacionProvincial.ipynb) 
-que podemos encontrar en la carpeta *notebooks*, en el que realizamos dos tarjetas de datos. 
-Estas tarjetas de datos se corresponden a los dataframes [df_AndaluciaLocalizado](https://github.com/JoseAlbertoSeco/MineriaDatos/blob/main/data/processed/df_AndaluciaLocalizado.csv)
-y [df_CLMLocalizado](https://github.com/JoseAlbertoSeco/MineriaDatos/blob/main/data/processed/df_CLMLocalizado.csv) que encontramos en la carpeta *data/processed*.
+A continuación los datos de preprocesado se encuentran en la carpeta *notebooks*
 
-- En el archivo *GráficasTrasPreprocesado* que encontramos en la carpeta *notebooks* podemos encontrarnos dos gráficas con el total de viajes interprovinciales de _Castilla-La Mancha_ y _Andalucía_
-
-El archivo *colab* [TrenesPreprocesado](https://github.com/JoseAlbertoSeco/BlablacarCarpooling_DataMining/blob/main/notebooks/TrenesPreprocesado.ipynb) se encuentra la obtención de la tarjeta de datos de los trenes, el archivo generado no se ha podido almacenar en GitHub debido a que pesa más de 25MB.
+En el archivo *GráficasTrasPreprocesado* que encontramos en la carpeta *notebooks* podemos encontrarnos dos gráficas con el total de viajes interprovinciales de _Castilla-La Mancha_ y _Andalucía_
 
 ## Lineas de trabajo.
 Las lineas de trabajo desarrolladas se encuentran en la carpeta *notebooks*. Estos archivos son:
@@ -79,6 +70,11 @@ Las lineas de trabajo desarrolladas se encuentran en la carpeta *notebooks*. Est
 * Clasificacion_Binaria
 * Clasificacion_Multiobjetivo
 * ComparacionTransporte
+
+Los dataset que se han utilizado se encuentran en la siguiente [carpeta](https://drive.google.com/drive/folders/10ElkZ_vYOs5R0q4pKDEeIf4bphgYK-ED?usp=sharing)
+
+## Modelos
+Los modelos obtenidos se han incluido en la carpeta *models*. El modelo de clasificación multiobjetivo de Andalucía se ha incluido en la siguiente [carpeta](https://drive.google.com/drive/folders/10ElkZ_vYOs5R0q4pKDEeIf4bphgYK-ED?usp=sharing)
 
 ## Construido con :keyboard:
 
